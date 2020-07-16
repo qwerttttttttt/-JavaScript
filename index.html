@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="jquery.js"></script>
+<script src="yh.js"></script>
+<script src="jquery.min.js"></script>
+
+
+<script type="text/javascript"> 
+var SysSecond;
+var InterValObj;
+
+function getNowTime(){
+    var data = new Date();
+    //获取时间戳
+    var miao = parseInt(data.getTime()/1000);
+    var zgsj = parseInt(new Date('2021-6-23 8:00:00').getTime()/1000);
+    var zuih = zgsj - miao;
+    return zuih;
+}
+$(document).ready(function() {
+    
+    var tupian = './img/'+Math.floor(Math.random() * 4+1)+'.jpg';
+  SysSecond = getNowTime(); 
+  $("#remainTime").html("加载中...");
+  $('#img').attr('src',tupian)
+  InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
+});
+ 
+//将时间减去1秒，计算天、时、分、秒
+function SetRemainTime() {
+  if (SysSecond > 0) {
+   SysSecond = SysSecond - 1;
+   var second = Math.floor(SysSecond % 60);            // 计算秒     
+   var minite = Math.floor((SysSecond / 60) % 60);      //计算分 
+   var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
+   var day = Math.floor((SysSecond / 3600) / 24);       //计算天 
+ 
+   var hourDiv = "<h1><span id='hourSpan'>"+ hour + "小时"+"</span></h1>";
+   var dayDiv = "<h1><span id='daySpan'>"+ day + "天"+"</span></h1>";
+ 
+    $("#remainTime").html("<h3>距离涿州中考还有:</h3>"+dayDiv + hourDiv + "<h1>"+minite + "分" + second + "秒</h1>");
+ 
+    if(hour === 0) {//当不足1小时时隐藏小时
+        $('#hourSpan').css('display','none');
+    }
+	if(day === 0) {//当不足1天时隐藏天
+        $('#daySpan').css('display','none');
+    }
+ 
+  } else {//剩余时间小于或等于0的时候，就停止间隔函数
+   window.clearInterval(InterValObj);
+   //这里可以添加倒计时时间为0后需要执行的事件
+   alert("时间为0");
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+@font-face {
+    font-family: hyyyt;
+    src: url(./fonts/hyyyt.ttf);
+}
+body{
+    text-align:center
+}
+
+#code{
+ 
+            position:absolute;
+            z-index:-1;
+            width:100%;
+            height:100%;
+            top:0px;
+            left:0px;
+          	overflow: hidden;
+        	background-size: cover;
+	        background-position: center center;
+ 
+}
+ 
+#img{
+    
+          height: 100%;
+
+}
+#remainTime{
+     position: absolute;
+     width:400px;
+     height:200px;
+     left:50%;
+     top:50%; 
+    margin-left:-200px;
+    margin-top:-100px;
+}
+
+footer{position:absolute;bottom:0;width:100%;height:100px;color:#FFFFFF;
+}
+a{
+    color:#FFFFFF;
+}
+</style>
+</head>
+ 
+<body>
+
+<div id="code">
+  <img  src='a' id = 'img' />
+</div>
+
+<div id="remainSeconds" style="display:none"></div>
+<center><div id="remainTime" style="font-size:20px;font-weight:800;color:#00BE95;font-family:hyyyt" 
+>啊这</div></center>
+ 
+<footer style="font-family : hyyyt">
+    2020 All Right by <a href = "http://blog.fogsong.top">FogSong
+</footer>
+
+</body>
+</html>
